@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Serverless Specification template describing your function.
+Resources:
+  queryDynamoDB:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: queryDynamoDB.queryDynamoDB_handler
+      Runtime: python3.8
+      CodeUri: .
+      Description: ''
+      MemorySize: 128
+      Timeout: 63
+      Role: 'arn:aws:iam::411658317626:role/service-role/queryDynamoDB-role-std3f0sj'
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /queryDynamoDB
+            Method: GET
+        Api2:
+          Type: Api
+          Properties:
+            Path: /queryDynamoDB
+            Method: GET
