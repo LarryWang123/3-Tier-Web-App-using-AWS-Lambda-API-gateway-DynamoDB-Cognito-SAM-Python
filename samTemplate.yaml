@@ -18,7 +18,7 @@ Resources:
           Properties:
             Path: /inputdata
             Method: POST
-Resources:
+
   queryDynamoDB:
     Type: 'AWS::Serverless::Function'
     Properties:
@@ -40,7 +40,7 @@ Resources:
           Properties:
             Path: /queryDynamoDB
             Method: GET
-Resources:
+
   DynamoDBSNS:
     Type: 'AWS::Serverless::Function'
     Properties:

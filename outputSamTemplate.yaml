@@ -7,7 +7,7 @@ Resources:
     Properties:
       Handler: DynamoDBSNS.DynamoDBSNS_handler
       Runtime: python3.8
-      CodeUri: s3://larrysambucket/cb12799250fabf6896574e200c441a3a
+      CodeUri: s3://larrysambucket/3f20eb367825d23310679324fbd15179
       Description: ''
       MemorySize: 128
       Timeout: 3
