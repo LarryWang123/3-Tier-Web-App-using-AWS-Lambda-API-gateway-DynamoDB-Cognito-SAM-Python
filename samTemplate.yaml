@@ -34,7 +34,7 @@ Resources:
           Properties:
             Path: /queryDynamoDB
             Method: GET
-   DynamoDBSNS:
+  DynamoDBSNS:
     Type: 'AWS::Serverless::Function'
     Properties:
       Handler: DynamoDBSNS.DynamoDBSNS_handler
