@@ -11,4 +11,5 @@ artifacts:
   files:
     - samTemplate.yaml
     - outputSamTemplate.yaml
-    - sorucecode/*
+    - sourcecode/*
+

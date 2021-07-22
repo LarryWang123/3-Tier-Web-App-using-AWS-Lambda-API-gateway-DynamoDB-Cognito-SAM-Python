@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: An AWS Serverless Specification template describing your function.
+Resources:
+  DynamoDBSNS:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: DynamoDBSNS.DynamoDBSNS_handler
+      Runtime: python3.8
+      CodeUri: s3://larrysambucket/cb12799250fabf6896574e200c441a3a
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: arn:aws:iam::411658317626:role/service-role/DynamoDBSNS-role-1g3pwneo
+      Events:
+        DynamoDB1:
+          Type: DynamoDB
+          Properties:
+            Stream:
+              Fn::GetAtt:
+              - Table1
+              - StreamArn
+            StartingPosition: LATEST
+            BatchSize: 100
+  Table1:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      StreamSpecification:
+        StreamViewType: NEW_IMAGE
