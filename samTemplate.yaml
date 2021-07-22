@@ -48,23 +48,6 @@ Resources:
         DynamoDB1:
           Type: DynamoDB
           Properties:
-            Stream:
-              'Fn::GetAtt':
-                - Table1
-                - StreamArn
+            Stream: 'arn:aws:dynamodb:us-east-2:411658317626:table/AWSDatabase/stream/2021-07-15T22:14:25.219'
             StartingPosition: LATEST
             BatchSize: 100
-  Table1:
-    Type: 'AWS::DynamoDB::Table'
-    Properties:
-      AttributeDefinitions:
-        - AttributeName: id
-          AttributeType: S
-      KeySchema:
-        - AttributeName: id
-          KeyType: HASH
-      ProvisionedThroughput:
-        ReadCapacityUnits: 5
-        WriteCapacityUnits: 5
-      StreamSpecification:
-        StreamViewType: NEW_IMAGE

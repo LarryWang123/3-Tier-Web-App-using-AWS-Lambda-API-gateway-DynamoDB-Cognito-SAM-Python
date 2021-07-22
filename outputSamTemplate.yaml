@@ -7,7 +7,7 @@ Resources:
     Properties:
       Handler: inputdata.inputdata_handler
       Runtime: python3.8
-      CodeUri: s3://larrysambucket/3f20eb367825d23310679324fbd15179
+      CodeUri: s3://larrysambucket/f5009127fb379a6a49474d021f2d7985
       Description: ''
       MemorySize: 128
       Timeout: 60
@@ -23,7 +23,7 @@ Resources:
     Properties:
       Handler: queryDynamoDB.queryDynamoDB_handler
       Runtime: python3.8
-      CodeUri: s3://larrysambucket/3f20eb367825d23310679324fbd15179
+      CodeUri: s3://larrysambucket/f1952740e708b42aa49be88635fecce7
       Description: ''
       MemorySize: 128
       Timeout: 60
@@ -34,3 +34,20 @@ Resources:
           Properties:
             Path: /queryDynamoDB
             Method: GET
+  DynamoDBSNS:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: DynamoDBSNS.DynamoDBSNS_handler
+      Runtime: python3.8
+      CodeUri: s3://larrysambucket/676a862883f7c9fb58d212a9b38b4730
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: arn:aws:iam::411658317626:role/service-role/DynamoDBSNS-role-1g3pwneo
+      Events:
+        DynamoDB1:
+          Type: DynamoDB
+          Properties:
+            Stream: arn:aws:dynamodb:us-east-2:411658317626:table/AWSDatabase/stream/2021-07-15T22:14:25.219
+            StartingPosition: LATEST
+            BatchSize: 100
