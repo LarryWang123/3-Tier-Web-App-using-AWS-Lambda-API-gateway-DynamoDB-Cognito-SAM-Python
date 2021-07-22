@@ -2,37 +2,35 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: An AWS Serverless Specification template describing your function.
 Resources:
-  DynamoDBSNS:
+  inputfunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: DynamoDBSNS.DynamoDBSNS_handler
+      Handler: inputdata.inputdata_handler
       Runtime: python3.8
       CodeUri: s3://larrysambucket/3f20eb367825d23310679324fbd15179
       Description: ''
       MemorySize: 128
-      Timeout: 3
-      Role: arn:aws:iam::411658317626:role/service-role/DynamoDBSNS-role-1g3pwneo
+      Timeout: 60
+      Role: arn:aws:iam::411658317626:role/service-role/inputfunction-role-yzndufg1
       Events:
-        DynamoDB1:
-          Type: DynamoDB
+        Api1:
+          Type: Api
           Properties:
-            Stream:
-              Fn::GetAtt:
-              - Table1
-              - StreamArn
-            StartingPosition: LATEST
-            BatchSize: 100
-  Table1:
-    Type: AWS::DynamoDB::Table
+            Path: /inputdata
+            Method: POST
+  queryDynamoDB:
+    Type: AWS::Serverless::Function
     Properties:
-      AttributeDefinitions:
-      - AttributeName: id
-        AttributeType: S
-      KeySchema:
-      - AttributeName: id
-        KeyType: HASH
-      ProvisionedThroughput:
-        ReadCapacityUnits: 5
-        WriteCapacityUnits: 5
-      StreamSpecification:
-        StreamViewType: NEW_IMAGE
+      Handler: queryDynamoDB.queryDynamoDB_handler
+      Runtime: python3.8
+      CodeUri: s3://larrysambucket/3f20eb367825d23310679324fbd15179
+      Description: ''
+      MemorySize: 128
+      Timeout: 60
+      Role: arn:aws:iam::411658317626:role/service-role/queryDynamoDB-role-std3f0sj
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /queryDynamoDB
+            Method: GET

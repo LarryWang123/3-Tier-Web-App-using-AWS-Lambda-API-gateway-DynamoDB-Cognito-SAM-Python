@@ -34,8 +34,4 @@ Resources:
           Properties:
             Path: /queryDynamoDB
             Method: GET
-        Api2:
-          Type: Api
-          Properties:
-            Path: /queryDynamoDB
-            Method: GET
+ 
