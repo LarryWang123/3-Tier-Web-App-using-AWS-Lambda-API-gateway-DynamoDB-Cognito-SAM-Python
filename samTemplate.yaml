@@ -7,7 +7,7 @@ Resources:
     Properties:
       Handler: inputdata.inputdata_handler
       Runtime: python3.8
-      CodeUri: ./sourcecode
+      CodeUri: ./sourcecode/inputdata.py
       Description: ''
       MemorySize: 128
       Timeout: 60
@@ -23,7 +23,7 @@ Resources:
     Properties:
       Handler: queryDynamoDB.queryDynamoDB_handler
       Runtime: python3.8
-      CodeUri: ./sourcecode
+      CodeUri: ./sourcecode/queryDynamoDB.py
       Description: ''
       MemorySize: 128
       Timeout: 60
@@ -34,4 +34,37 @@ Resources:
           Properties:
             Path: /queryDynamoDB
             Method: GET
- 
+   DynamoDBSNS:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: DynamoDBSNS.DynamoDBSNS_handler
+      Runtime: python3.8
+      CodeUri: ./sourcecode/DynamoDBSNS.py
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: 'arn:aws:iam::411658317626:role/service-role/DynamoDBSNS-role-1g3pwneo'
+      Events:
+        DynamoDB1:
+          Type: DynamoDB
+          Properties:
+            Stream:
+              'Fn::GetAtt':
+                - Table1
+                - StreamArn
+            StartingPosition: LATEST
+            BatchSize: 100
+  Table1:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      StreamSpecification:
+        StreamViewType: NEW_IMAGE
