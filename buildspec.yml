@@ -3,6 +3,7 @@ phases:
   install:
     runtime-versions:
       python: 3.8
+  build:
     commands:
       - aws cloudformation package --template-file samTemplate.yaml --s3-bucket larrysambucket --output-template-file outputSamTemplate.yaml
 artifacts:
@@ -10,3 +11,4 @@ artifacts:
   files:
     - samTemplate.yaml
     - outputSamTemplate.yaml
+    - sorucecode/*
