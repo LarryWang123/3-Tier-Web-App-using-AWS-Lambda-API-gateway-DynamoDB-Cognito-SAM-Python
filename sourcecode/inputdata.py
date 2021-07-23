@@ -19,7 +19,7 @@ def inputdata_handler(event, context):
 
 # extract values from the event object we got from the Lambda service and store in a variable
     name = event['Topic'] +' '+ event['Contents']
-# write name and time to the DynamoDB table using the object we instantiated and save response in a variable
+# write Topic,Contents and time to the DynamoDB table using the object we instantiated and save response in a variable
     response = table.put_item(
         Item={
             'Topic': event['Topic'],
@@ -31,7 +31,7 @@ def inputdata_handler(event, context):
  # return a properly formatted JSON object
     return {
         'statusCode': 200,
-        'body': json.dumps('Hello from Lambda, ' + name)
+        'body': json.dumps('You input: ' + name)
     }           
  
             
